@@ -1,5 +1,6 @@
 package com.es.projector.net;
 
+import com.es.projector.common.Constants;
 import com.es.projector.net.rmi.ShareService;
 
 import java.rmi.NotBoundException;
@@ -31,6 +32,6 @@ public class Client {
 
         Registry registry = LocateRegistry.getRegistry(networkAddress);
         return (ShareService) registry
-                .lookup("//" + networkAddress + ":1099/ProjectorShareService"+sessionData[1]);
+                .lookup(String.format(Constants.RMI_REGISTRY, networkAddress, sessionData[1]));
     }
 }

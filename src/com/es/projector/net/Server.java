@@ -1,5 +1,6 @@
 package com.es.projector.net;
 
+import com.es.projector.common.Constants;
 import com.es.projector.net.rmi.ShareService;
 import com.es.projector.net.rmi.ShareServiceImpl;
 
@@ -48,7 +49,7 @@ public class Server {
         ShareService stub = (ShareService) UnicastRemoteObject
                 .exportObject(shareService, 1099);
 
-        this.rmiRegistry.rebind("//" + networkAddress + ":1099/ProjectorShareService" + sessionData[1], stub);
+        this.rmiRegistry.rebind(String.format(Constants.RMI_REGISTRY, networkAddress, sessionData[1]), stub);
         return stub;
     }
 
@@ -57,7 +58,7 @@ public class Server {
             String[] sessionData = this.lastSessionId.split(Pattern.quote("-"));
             String networkAddress = this.networkSession.extractIp();
             UnicastRemoteObject.unexportObject(shareService, true);
-            this.rmiRegistry.unbind("//" + networkAddress + ":1099/ProjectorShareService" + sessionData[1]);
+            this.rmiRegistry.unbind(String.format(Constants.RMI_REGISTRY, networkAddress, sessionData[1]));
             shareService = new ShareServiceImpl();
         } catch (RemoteException | NotBoundException e) {
             e.printStackTrace();
