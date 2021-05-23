@@ -34,11 +34,6 @@ public class ScreenShare implements ContentObserver.ContentObserverListener {
 
     @Override
     public void onFrameUpdate(BufferedImage image) {
-        try {
-            ImageIO.write(image, "jpg", new File("/Users/edonsekiraqa/tmp.jpg"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         BufferedImage resized = ImageManipulator.resizeWithScaling
                 (image, mainPanel.getSize().width, mainPanel.getSize().height);
         screenView.setIcon(new ImageIcon(resized));
