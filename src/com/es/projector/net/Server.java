@@ -47,7 +47,7 @@ public class Server {
         ShareService stub = (ShareService) UnicastRemoteObject
                 .exportObject(shareService, 1099);
 
-        this.rmiRegistry.rebind(String.format(Constants.RMI_REGISTRY, networkAddress, sessionKey), stub);
+        this.rmiRegistry.rebind(String.format(Constants.Stream.RMI_REGISTRY, networkAddress, sessionKey), stub);
         return stub;
     }
 
@@ -55,7 +55,7 @@ public class Server {
         try {
             String networkAddress = NetworkSession.instance().extractIp();
             UnicastRemoteObject.unexportObject(shareService, true);
-            this.rmiRegistry.unbind(String.format(Constants.RMI_REGISTRY, networkAddress, this.extractSessionKey(this.lastSessionId)));
+            this.rmiRegistry.unbind(String.format(Constants.Stream.RMI_REGISTRY, networkAddress, this.extractSessionKey(this.lastSessionId)));
             shareService = new ShareServiceImpl();
         } catch (RemoteException | NotBoundException e) {
             e.printStackTrace();

@@ -45,7 +45,7 @@ public class MainWindow implements ContentProvider.ContentProviderListener, Acti
     }
 
     private void init() {
-        detailsLabel.setText(String.format("%s, Author: %s", Constants.APPLICATION_VERSION, Constants.APPLICATION_AUTHOR));
+        detailsLabel.setText(String.format("%s, Author: %s", Constants.Application.VERSION, Constants.Application.AUTHOR));
         this.initSession();
 
         startSharing.addActionListener(this);
@@ -87,7 +87,7 @@ public class MainWindow implements ContentProvider.ContentProviderListener, Acti
     }
 
     private void openScreenShareWindow(ShareService shareService) {
-        JFrame jFrame = new JFrame(String.format("%s v%s", Constants.APPLICATION_NAME, Constants.APPLICATION_VERSION));
+        JFrame jFrame = new JFrame(String.format("%s v%s", Constants.Application.NAME, Constants.Application.VERSION));
         jFrame.setContentPane(new ScreenShare(shareService).getMainPanel());
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.addWindowListener(new WindowListener());
@@ -124,7 +124,7 @@ public class MainWindow implements ContentProvider.ContentProviderListener, Acti
     }
 
     private void handleStartScreenShare() {
-        GraphicsDevice[] graphicsDevices = this.getScreens();
+        GraphicsDevice[] graphicsDevices = this.getGraphicDevices();
         if (graphicsDevices.length > 1) {
             List<Screen> screens = this.prepareScreenList(graphicsDevices);
             ScreenListDialog screenListDialog = new ScreenListDialog("Choose Screen you want to share:", screens);
@@ -185,7 +185,7 @@ public class MainWindow implements ContentProvider.ContentProviderListener, Acti
         }
     }
 
-    private GraphicsDevice[] getScreens() {
+    private GraphicsDevice[] getGraphicDevices() {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         return ge.getScreenDevices();
     }

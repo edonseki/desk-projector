@@ -55,11 +55,11 @@ public class ContentProvider implements Runnable {
                 shareService.setMouseY(mousePoint.y);
                 final BufferedImage image = ScreenCapture.captureScreen(this.screenIndex);
                 shareService.updateScreenCapture(ImageManipulator.imageToByte(image));
-                if (sleepTime.addAndGet(Constants.REFRESH_RATE) >= 1000 * 5) {
+                if (sleepTime.addAndGet(Constants.Stream.REFRESH_RATE) >= 1000 * 5) {
                     sleepTime.set(0);
                 }
 
-                Thread.sleep(Constants.REFRESH_RATE);
+                Thread.sleep(Constants.Stream.REFRESH_RATE);
             } catch (RemoteException | AWTException | InterruptedException exception) {
                 // silient exception
             }

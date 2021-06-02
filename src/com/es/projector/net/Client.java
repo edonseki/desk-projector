@@ -28,6 +28,6 @@ public class Client {
 
         Registry registry = LocateRegistry.getRegistry(networkAddress);
         return (ShareService) registry
-                .lookup(String.format(Constants.RMI_REGISTRY, networkAddress, sessionData[1]));
+                .lookup(String.format(Constants.Stream.RMI_REGISTRY, networkAddress, sessionData[1]));
     }
 }

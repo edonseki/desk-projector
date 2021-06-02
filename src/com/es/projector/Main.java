@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         initLookAndFeel();
 
-        JFrame jFrame = new JFrame(String.format("%s v%s", Constants.APPLICATION_NAME, Constants.APPLICATION_VERSION));
+        JFrame jFrame = new JFrame(String.format("%s v%s", Constants.Application.NAME, Constants.Application.VERSION));
         jFrame.setContentPane(new MainWindow().getMainPanel());
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.pack();

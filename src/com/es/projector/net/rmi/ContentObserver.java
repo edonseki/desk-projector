@@ -46,7 +46,7 @@ public class ContentObserver implements Runnable {
                     this.contentObserverListener.onFrameUpdate(imageWithCursor);
                 }
                 this.shareService.addWatcher(this.networkSession.getHostName());
-                Thread.sleep(Constants.REFRESH_RATE);
+                Thread.sleep(Constants.Stream.REFRESH_RATE);
             } catch (IOException e) {
                 if (this.contentObserverListener != null) {
                     this.stop();
