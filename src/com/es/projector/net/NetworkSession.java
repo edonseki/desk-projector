@@ -1,5 +1,7 @@
 package com.es.projector.net;
 
+import sun.nio.ch.Net;
+
 import java.net.*;
 import java.util.Enumeration;
 import java.util.Random;
@@ -7,6 +9,17 @@ import java.util.regex.Pattern;
 
 public class NetworkSession {
     private static String sessionId;
+
+    private static NetworkSession instance;
+
+    private NetworkSession(){}
+
+    public static NetworkSession instance(){
+        if(instance == null){
+            instance = new NetworkSession();
+        }
+        return instance;
+    }
 
     public void initSession(){
         NetworkSession.sessionId = generateProjectorId();

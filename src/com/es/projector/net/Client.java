@@ -12,11 +12,7 @@ import java.util.regex.Pattern;
 public class Client {
     public static Client client;
 
-    private NetworkSession networkSession;
-
-    private Client() {
-        this.networkSession = new NetworkSession();
-    }
+    private Client() {}
 
     public static Client init() {
         if (Client.client == null) {
@@ -26,7 +22,7 @@ public class Client {
     }
 
     public ShareService connect(String projectorId) throws NotBoundException, RemoteException {
-        String networkAddress = networkSession.getHostFromSessionId(projectorId);
+        String networkAddress = NetworkSession.instance().getHostFromSessionId(projectorId);
         System.setProperty("java.rmi.server.hostname", networkAddress);
         String[] sessionData = projectorId.split(Pattern.quote("-"));
 

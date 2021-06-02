@@ -19,7 +19,7 @@ public class ContentObserver implements Runnable {
     public ContentObserver(ShareService shareService, ContentObserverListener contentObserverListener) {
         this.shareService = shareService;
         this.contentObserverListener = contentObserverListener;
-        this.networkSession = new NetworkSession();
+        this.networkSession = NetworkSession.instance();
     }
 
     public void start() {
@@ -49,8 +49,8 @@ public class ContentObserver implements Runnable {
                 Thread.sleep(Constants.REFRESH_RATE);
             } catch (IOException e) {
                 if (this.contentObserverListener != null) {
-                    this.contentObserverListener.onError(String.format("%s\n\nError:%s", e.getClass().getSimpleName(), e.getMessage()), true);
                     this.stop();
+                    this.contentObserverListener.onError(String.format("%s\n\nError:%s", e.getClass().getSimpleName(), e.getMessage()), true);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();

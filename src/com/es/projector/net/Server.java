@@ -15,7 +15,6 @@ import java.util.regex.Pattern;
 
 public class Server {
     public static Server server;
-    private NetworkSession networkSession;
 
     static ShareService shareService = new ShareServiceImpl();
 
@@ -23,7 +22,6 @@ public class Server {
     private Registry rmiRegistry;
 
     private Server() {
-        this.networkSession = new NetworkSession();
     }
 
     public static Server init() {
@@ -34,12 +32,12 @@ public class Server {
     }
 
     public ShareService start(String sessionId) throws RemoteException {
-        String[] sessionData = sessionId.split(Pattern.quote("-"));
-        if (sessionData.length != 2) {
+        String sessionKey = this.extractSessionKey(sessionId);
+        if (sessionKey == null) {
             return null;
         }
         lastSessionId = sessionId;
-        String networkAddress = this.networkSession.extractIp();
+        String networkAddress = NetworkSession.instance().extractIp();
         System.setProperty("java.rmi.server.hostname", networkAddress);
 
         if (this.rmiRegistry == null) {
@@ -49,19 +47,26 @@ public class Server {
         ShareService stub = (ShareService) UnicastRemoteObject
                 .exportObject(shareService, 1099);
 
-        this.rmiRegistry.rebind(String.format(Constants.RMI_REGISTRY, networkAddress, sessionData[1]), stub);
+        this.rmiRegistry.rebind(String.format(Constants.RMI_REGISTRY, networkAddress, sessionKey), stub);
         return stub;
     }
 
     public void stop() {
         try {
-            String[] sessionData = this.lastSessionId.split(Pattern.quote("-"));
-            String networkAddress = this.networkSession.extractIp();
+            String networkAddress = NetworkSession.instance().extractIp();
             UnicastRemoteObject.unexportObject(shareService, true);
-            this.rmiRegistry.unbind(String.format(Constants.RMI_REGISTRY, networkAddress, sessionData[1]));
+            this.rmiRegistry.unbind(String.format(Constants.RMI_REGISTRY, networkAddress, this.extractSessionKey(this.lastSessionId)));
             shareService = new ShareServiceImpl();
         } catch (RemoteException | NotBoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private String extractSessionKey(String sessionId) {
+        String[] sessionData = sessionId.split(Pattern.quote("-"));
+        if (sessionData.length != 2) {
+            return null;
+        }
+        return sessionData[1];
     }
 }

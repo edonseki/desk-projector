@@ -38,7 +38,7 @@ public class MainWindow implements ContentProvider.ContentProviderListener, Acti
     private ContentProvider contentProvider;
 
     public MainWindow() {
-        this.networkSession = new NetworkSession();
+        this.networkSession = NetworkSession.instance();
         this.server = Server.init();
         this.client = Client.init();
         this.init();
@@ -61,7 +61,7 @@ public class MainWindow implements ContentProvider.ContentProviderListener, Acti
     private void displayWatchers(List<String> watchers) {
         if (this.hasDataChanges(watchers, watcherList.getModel())) {
             DefaultListModel listModel = new DefaultListModel();
-            watchers.forEach(c -> listModel.addElement(c));
+            watchers.forEach(listModel::addElement);
             watcherList.setModel(listModel);
         }
     }
