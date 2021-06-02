@@ -4,12 +4,8 @@ import com.es.projector.common.ImageManipulator;
 import com.es.projector.net.rmi.ContentObserver;
 import com.es.projector.net.rmi.ShareService;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 
 public class ScreenShare implements ContentObserver.ContentObserverListener {
     private JPanel mainPanel;
