@@ -15,4 +15,4 @@ This tool works on local network and in order to make sure you and your colleagu
 
 ### Build projector
 1. Run <code>mvn install</code> on main path
-2. After the successful build run/share the file with <code>jar-with-dependencies</code> and you're ready to have local screen sharing.
+2. After the successful build run/share the file from target folder with <code>jar-with-dependencies</code> and you're ready to have local screen sharing.
