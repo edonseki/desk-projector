@@ -53,6 +53,7 @@ public class MainWindow implements ContentProvider.ContentProviderListener, Acti
         startSharing.addActionListener(this);
         joinButton.addActionListener(this);
         stopSharing.addActionListener(this);
+        otherProjectorKey.addActionListener(this);
     }
 
     private void initSession() {
@@ -112,16 +113,21 @@ public class MainWindow implements ContentProvider.ContentProviderListener, Acti
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!(e.getSource() instanceof JButton)) {
-            return;
+        if (e.getSource() instanceof JButton){
+            JButton button = (JButton) e.getSource();
+            if (button.equals(this.startSharing)) {
+                this.handleStartScreenShare();
+            } else if (button.equals(this.stopSharing)) {
+                this.stopScreenSharing();
+            } else if (button.equals(this.joinButton)) {
+                this.joinScreenSharing();
+            }
         }
-        JButton button = (JButton) e.getSource();
-        if (button.equals(this.startSharing)) {
-            this.handleStartScreenShare();
-        } else if (button.equals(this.stopSharing)) {
-            this.stopScreenSharing();
-        } else if (button.equals(this.joinButton)) {
-            this.joinScreenSharing();
+        if(e.getSource() instanceof JTextField) {
+            JTextField textField = (JTextField) e.getSource();
+            if(textField.equals(this.otherProjectorKey)){
+                this.joinScreenSharing();
+            }
         }
     }
 
