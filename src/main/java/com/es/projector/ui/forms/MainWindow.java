@@ -43,7 +43,6 @@ public class MainWindow implements ContentProvider.ContentProviderListener, Acti
         this.server = Server.init();
         this.client = Client.init();
         this.init();
-        Asset.getCursor();
     }
 
     private void init() {
