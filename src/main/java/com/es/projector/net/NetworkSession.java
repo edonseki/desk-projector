@@ -1,12 +1,16 @@
 package com.es.projector.net;
 
 import java.net.*;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
 
 public class NetworkSession {
     private static String sessionId;
+
+    private static List<String> potentialSessionIds = new ArrayList<>();
 
     private static NetworkSession instance;
 
@@ -25,6 +29,10 @@ public class NetworkSession {
 
     public String getSessionId() {
         return NetworkSession.sessionId;
+    }
+
+    public List<String> getPotentialSessionIds(){
+        return NetworkSession.potentialSessionIds;
     }
 
     public String getHostName(){
@@ -66,6 +74,7 @@ public class NetworkSession {
                     if (!(addr instanceof Inet4Address)){
                         continue;
                     }
+                    potentialSessionIds.add(addr.getHostAddress());
                     if(addr.getHostAddress().startsWith("127.") || addr.getHostAddress().startsWith("172.")){
                         continue;
                     }

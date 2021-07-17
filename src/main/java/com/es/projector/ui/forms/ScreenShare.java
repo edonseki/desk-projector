@@ -16,14 +16,13 @@ public class ScreenShare implements ContentObserver.ContentObserverListener {
 
     public ScreenShare(ShareService shareService) {
         this.shareService = shareService;
-        this.observeStream();
     }
 
     public JPanel getMainPanel() {
         return mainPanel;
     }
 
-    private void observeStream() {
+    public void observeStream() {
         this.contentObserver = new ContentObserver(this.shareService, this);
         this.contentObserver.start();
     }

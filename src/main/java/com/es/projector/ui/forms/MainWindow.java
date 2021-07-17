@@ -1,6 +1,5 @@
 package com.es.projector.ui.forms;
 
-import com.es.projector.asset.Asset;
 import com.es.projector.common.Constants;
 import com.es.projector.common.ImageManipulator;
 import com.es.projector.common.ScreenCapture;
@@ -42,10 +41,9 @@ public class MainWindow implements ContentProvider.ContentProviderListener, Acti
         this.networkSession = NetworkSession.instance();
         this.server = Server.init();
         this.client = Client.init();
-        this.init();
     }
 
-    private void init() {
+    public void init() {
         detailsLabel.setText(String.format("%s, Author: %s", Constants.Application.VERSION, Constants.Application.AUTHOR));
 
         this.initSession();
@@ -90,8 +88,9 @@ public class MainWindow implements ContentProvider.ContentProviderListener, Acti
     }
 
     private void openScreenShareWindow(ShareService shareService) {
+        ScreenShare screenShare = new ScreenShare(shareService);
         JFrame jFrame = new JFrame(String.format("%s v%s", Constants.Application.NAME, Constants.Application.VERSION));
-        jFrame.setContentPane(new ScreenShare(shareService).getMainPanel());
+        jFrame.setContentPane(screenShare.getMainPanel());
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.addWindowListener(new WindowListener());
         jFrame.setIconImage(new ImageIcon("").getImage());
@@ -100,6 +99,8 @@ public class MainWindow implements ContentProvider.ContentProviderListener, Acti
         jFrame.setSize(screenSize.width, screenSize.height);
         jFrame.setLocationRelativeTo(null);
         jFrame.setVisible(true);
+
+        screenShare.observeStream();
     }
 
     public JPanel getMainPanel() {
@@ -113,7 +114,7 @@ public class MainWindow implements ContentProvider.ContentProviderListener, Acti
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof JButton){
+        if (e.getSource() instanceof JButton) {
             JButton button = (JButton) e.getSource();
             if (button.equals(this.startSharing)) {
                 this.handleStartScreenShare();
@@ -123,9 +124,9 @@ public class MainWindow implements ContentProvider.ContentProviderListener, Acti
                 this.joinScreenSharing();
             }
         }
-        if(e.getSource() instanceof JTextField) {
+        if (e.getSource() instanceof JTextField) {
             JTextField textField = (JTextField) e.getSource();
-            if(textField.equals(this.otherProjectorKey)){
+            if (textField.equals(this.otherProjectorKey)) {
                 this.joinScreenSharing();
             }
         }
@@ -163,6 +164,10 @@ public class MainWindow implements ContentProvider.ContentProviderListener, Acti
     private void startScreenSharing(int screenIndex) {
         try {
             ShareService shareService = server.start(projectorKey.getText());
+            if(shareService == null){
+                JOptionPane.showMessageDialog(null, Constants.Texts.SERVER_NOT_STARTED);
+                return;
+            }
             contentProvider = new ContentProvider(shareService, screenIndex, MainWindow.this);
             contentProvider.start();
             startSharing.setEnabled(false);
@@ -196,5 +201,41 @@ public class MainWindow implements ContentProvider.ContentProviderListener, Acti
     private GraphicsDevice[] getGraphicDevices() {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         return ge.getScreenDevices();
+    }
+
+    public static void main(String[] args) {
+        initLookAndFeel();
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                    SwingUtilities.invokeLater(() -> {
+                        MainWindow mainWindow = new MainWindow();
+                        JFrame jFrame = new JFrame(String.format("%s v%s", Constants.Application.NAME, Constants.Application.VERSION));
+                        jFrame.setContentPane(mainWindow.getMainPanel());
+                        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        jFrame.pack();
+                        jFrame.setSize(317, 450);
+                        jFrame.setLocationRelativeTo(null);
+                        jFrame.setResizable(false);
+                        jFrame.setVisible(true);
+
+                        mainWindow.init();
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                super.run();
+            }
+        }.start();
+    }
+
+    private static void initLookAndFeel() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            // silient exception
+        }
     }
 }

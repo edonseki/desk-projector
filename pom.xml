@@ -47,7 +47,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>
-                                        com.es.projector.Main
+                                        com.es.projector.ui.forms.MainWindow
                                     </mainClass>
                                 </manifest>
                             </archive>
