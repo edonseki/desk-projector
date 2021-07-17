@@ -12,5 +12,6 @@ public class Constants {
     }
     public static class Texts{
         public final static String SERVER_NOT_STARTED = "The sharing server couldn't start!";
+        public static final String UNABLE_TO_GENERATE_SESSION =  "Unable to generate session id. The application will close.";
     }
 }

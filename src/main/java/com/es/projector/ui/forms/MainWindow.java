@@ -56,7 +56,12 @@ public class MainWindow implements ContentProvider.ContentProviderListener, Acti
 
     private void initSession() {
         networkSession.initSession();
-        projectorKey.setText(networkSession.getSessionId());
+        String sessionId = networkSession.getSessionId();
+        if(sessionId == null){
+            JOptionPane.showMessageDialog(null, Constants.Texts.UNABLE_TO_GENERATE_SESSION);
+            System.exit(0);
+        }
+        projectorKey.setText(sessionId);
     }
 
     private void displayWatchers(List<String> watchers) {

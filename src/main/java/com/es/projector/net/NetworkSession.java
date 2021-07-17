@@ -47,13 +47,13 @@ public class NetworkSession {
         String ipAddr = extractIp();
 
         if(ipAddr == null){
-            return "-";
+            return null;
         }
 
         String[] parts = ipAddr.split(Pattern.quote("."));
 
         if(parts.length < 2){
-            return "-";
+            return null;
         }
 
         return String.format("%s.%s-%s", parts[parts.length-2], parts[parts.length-1], generateRandomString(4));
