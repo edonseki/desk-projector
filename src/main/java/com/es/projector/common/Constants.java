@@ -3,7 +3,7 @@ package com.es.projector.common;
 public class Constants {
     public static class Application {
         public final static String NAME = "Projector";
-        public final static String VERSION = "1.0";
+        public final static String VERSION = "1.0.1";
         public final static String AUTHOR = "Edon Sekiraqa";
     }
     public static class Stream{
