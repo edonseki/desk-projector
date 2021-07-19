@@ -18,7 +18,9 @@ This tool works on local network and in order to make sure you and your colleagu
 2. After the successful build run/share the file from target folder with <code>jar-with-dependencies</code> and you're ready to have local screen sharing.
 
 ### Only for Mac Users
-In case you face any issue with sharing permission then it works if you reset entirely the permissions for screensharing using the command below:
-<code>tccutil reset ScreenCapture</code>
+In case you face any issue with screen sharing permission, then tou could reset entirely the permissions for screen sharing using the command below:
+<code>tccutil reset ScreenCapture</code>.
 
+
+___
 <a href="https://www.buymeacoffee.com/edonseki" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>

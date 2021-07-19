@@ -181,6 +181,7 @@ public class MainWindow implements ContentProvider.ContentProviderListener, Acti
             startSharing.setEnabled(false);
             joinButton.setEnabled(false);
             stopSharing.setEnabled(true);
+            otherProjectorKey.setEnabled(false);
         } catch (RemoteException remoteException) {
             JOptionPane.showMessageDialog(null, remoteException.getMessage());
         }
@@ -193,6 +194,7 @@ public class MainWindow implements ContentProvider.ContentProviderListener, Acti
         stopSharing.setEnabled(false);
         joinButton.setEnabled(true);
         startSharing.setEnabled(true);
+        otherProjectorKey.setEnabled(true);
         this.onWatchersUpdated(new ArrayList<>());
         this.initSession();
     }
