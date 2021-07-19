@@ -16,3 +16,7 @@ This tool works on local network and in order to make sure you and your colleagu
 ### Build projector
 1. Run <code>mvn install</code> on main path
 2. After the successful build run/share the file from target folder with <code>jar-with-dependencies</code> and you're ready to have local screen sharing.
+
+### Only for Mac Users
+In case you face any issue with sharing permission then it works if you reset entirely the permissions for screensharing using the command below:
+<code>tccutil reset ScreenCapture</code>
