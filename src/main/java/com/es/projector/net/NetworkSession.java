@@ -107,6 +107,10 @@ public class NetworkSession {
 
         String ipAddr = extractIp();
 
+        if(sessionParts[0].split(Pattern.quote(".")).length > 1){
+            return sessionParts[0];
+        }
+
         if(ipAddr == null){
             return null;
         }
